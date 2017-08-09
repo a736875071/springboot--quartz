@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.cm.quartz.AutoDeductionExtDao">
+    <sql id="Base_Column_List">
+        id, orgId, deduCycle, beginTime, endTime, portProcedure, taskStatus, updateTime,schedName,triggerName,triggerGroup,cronExpression
+    </sql>
+    <sql id="Base_Column_List_1">
+        id, orgId, deduCycle, beginTime, endTime, portProcedure, taskStatus, updateTime
+    </sql>
+    <!--更改所有定时任务状态-->
+    <update id="BatchAutoDeductionTaskStatus">
+          update cm_auto_deduction SET  taskStatus = #{taskStatus,jdbcType=CHAR}
+    </update>
+    <!--条件查询自动扣费参数配置-->
+    <select id="selectAutoDeductionDtoByCondition"
+            resultType="com.domain.cm.quartz.QuartzTimedTaskDto">
+        select
+        cad.id, cad.orgId, cad.deduCycle, cad.beginTime, cad.endTime, cad.portProcedure, cad.taskStatus, cad.updateTime,
+        qct.schedName,qct.triggerName,qct.triggerGroup,qct.cronExpression
+        from cm_auto_deduction cad LEFT JOIN qrtz_cron_triggers qct on cad.id=qct.id
+        where 1=1
+        <if test="id != null">
+            and cad.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and cad.orgId = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="taskStatus != null">
+            and cad.taskStatus = #{taskStatus,jdbcType=CHAR}
+        </if>
+        <if test="triggerGroup != null">
+            and qct.triggerGroup= #{triggerGroup,jdbcType=VARCHAR}
+        </if>
+        <if test="triggerName != null">
+            and qct.triggerName= #{triggerName,jdbcType=VARCHAR}
+        </if>
+        <if test="schedName != null">
+            and qct.schedName= #{schedName,jdbcType=VARCHAR}
+        </if>
+        <if test="offset != null and rows != null">
+            limit #{offset}, #{rows}
+        </if>
+    </select>
+    <!--条件查询自动扣费参数配置条数-->
+    <select id="selectAutoDeductionDtoTotalByCondition"
+            resultType="java.lang.Integer">
+        select
+        COUNT(cad.id)
+        from cm_auto_deduction cad LEFT JOIN qrtz_cron_triggers qct on cad.id=qct.id
+        where 1=1
+        <if test="id != null">
+            and cad.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and cad.orgId = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="taskStatus != null">
+            and cad.taskStatus = #{taskStatus,jdbcType=CHAR}
+        </if>
+        <if test="triggerGroup != null">
+            and qct.triggerGroup= #{triggerGroup,jdbcType=VARCHAR}
+        </if>
+        <if test="triggerName != null">
+            and qct.triggerName= #{triggerName,jdbcType=VARCHAR}
+        </if>
+        <if test="schedName != null">
+            and qct.schedName= #{schedName,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectAutoDeductionDto" resultType="com.domain.cm.quartz.QuartzTimedTaskDto">
+        select
+        <include refid="Base_Column_List_1"/>
+        from cm_auto_deduction
+    </select>
+</mapper>
