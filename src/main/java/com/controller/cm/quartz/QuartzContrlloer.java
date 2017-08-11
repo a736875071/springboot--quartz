@@ -42,6 +42,8 @@ public class QuartzContrlloer {
     private AutoDeductionExtDao autoDeductionExtDao;
 
     public StdSchedulerFactory myStdSchedulerFactory() {
+        //这是基于上线项目剥离出，项目中url，username，password可能会生产根据环境更改，所以使用加载properties形式
+        //如果实际情况不一样可以直接在resource下写properties文件
         Properties quartzProperties = QuartzDefaultName.quartz();
         quartzProperties.setProperty("org.quartz.dataSource.quartzDataSource.URL", "jdbc:mysql://127.0.0.1:3306/quartz?characterEncoding=utf-8&useSSL=false");
         quartzProperties.setProperty("org.quartz.dataSource.quartzDataSource.user", "root");
