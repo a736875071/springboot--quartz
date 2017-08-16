@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>定时任务管理界面</title>
+    <link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/demo.css">
+    <script type="text/javascript" src="js/themes/jquery.min.js"></script>
+    <script type="text/javascript" src="js/themes/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/themes/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div style="margin:20px 0;"></div>
+<table id="dg" class="easyui-datagrid" title="定时任务列表" data-options="
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false,
+				pagination:true,
+				pageSize:10,
+               toolbar:toolbar ">
+    <thead>
+    <tr>
+        <th field="job_NAME" aligh="center" width="10%">任务名称</th>
+        <th field="job_GROUP" width="10%">任务所在组</th>
+        <th field="job_CLASS_NAME" width="20%">任务类名</th>
+        <th field="trigger_NAME" width="10%" align="right">触发器名称</th>
+        <th field="trigger_GROUP" width="10%" align="right">触发器所在组</th>
+        <th field="cron_EXPRESSION" width="10%" align="right">表达式</th>
+        <th field="time_ZONE_ID" width="10%">时区</th>
+    </tr>
+    </thead>
+</table>
+<div id="w" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-save'"
+     style="width:500px;height:350px;padding:5px;">
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'center'" style="padding:10px;">
+            <form id="ff">
+                <div style="margin-bottom:20px">
+                    <div>任务名称:
+                        <input class="easyui-textbox" id="job_NAME" name="job_NAME">
+                    </div>
+                </div>
+                <div style="margin-bottom:20px">
+                    <div>任务所在组:
+                        <input class="easyui-textbox" id="job_GROUP" name="job_GROUP">
+                    </div>
+                </div>
+                <div style="margin-bottom:20px">
+                    <div>触发器名称:
+                        <input class="easyui-textbox" id="trigger_NAME" name="trigger_NAME">
+                    </div>
+                </div>
+                <div style="margin-bottom:20px">
+                    <div>触发器所在组:
+                        <input class="easyui-textbox" id="trigger_GROUP" name="trigger_GROUP">
+                    </div>
+                </div>
+                <div style="margin-bottom:20px">
+                    <div>表达式:
+                        <input class="easyui-textbox" id="cron_EXPRESSION" name="cron_EXPRESSION">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)"
+               onclick="add()" style="width:80px">添加</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)"
+               onclick="$('#w').window('close')" style="width:80px">取消</a>
+        </div>
+    </div>
+</div>
+<script>
+    var toolbar = [{
+        text: '添加任务',
+        iconCls: 'icon-add',
+        handler: function () {
+            $('#w').window('open');
+        }
+    }, '-',{
+        text: '删除任务',
+        iconCls: 'icon-no',
+        handler: function () {
+            dele();
+        }
+    }, '-', {
+        text: '暂停任务',
+        iconCls: 'icon-tip',
+        handler: function () {
+            pause();
+        }
+    }, '-', {
+        text: '恢复任务',
+        iconCls: 'icon-tip',
+        handler: function () {
+            resume();
+        }
+    }];
+    /**
+     * 加载数据
+     */
+    function getData() {
+        var rows = [];
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost:1111/epm/cm/quartz/getqueryjob",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data.meta.code);
+                rows = data.data;
+                $('#dg').datagrid({loadFilter: pagerFilter}).datagrid('loadData', data.data);
+            }
+        });
+        return rows;
+    }
+    /**
+     * 添加定时任务
+     */
+    function add() {
+        var formData1 = serializeObject($('#ff'));
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:1111/epm/cm/quartz/postQuartzByJobAndTrigger",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(formData1),
+            success: function (data) {
+                $('#w').window('close');
+                console.log(data.meta.code);
+                if (data.meta.code == 1) {
+                    alert(data.meta.message);
+                    $('#dg').datagrid({loadFilter: pagerFilter}).datagrid('loadData', getData());
+                } else {
+                    alert(data.meta.message);
+                }
+            }
+        });
+    }
+    /**
+     * 删除定时任务
+     */
+   function dele() {
+       var row = $('#dg').datagrid('getSelected');
+       if(row==null){
+           alert("请选择一条数据");
+           return;
+       }
+       $.ajax({
+           type: 'DELETE',
+           url: "http://localhost:1111/epm/cm/quartz/deleQuartzByJobAndTrigger",
+           dataType: 'json',
+           contentType: "application/json; charset=utf-8",
+           data: JSON.stringify(row),
+           success: function (data) {
+               if (data.meta.code == 1) {
+                   alert(data.meta.message);
+                   $('#dg').datagrid({loadFilter: pagerFilter}).datagrid('loadData', getData());
+               } else {
+                   alert(data.meta.message);
+               }
+           }
+       });
+   }
+    /**
+     * 暂停定时任务
+     */
+   function pause() {
+       var row = $('#dg').datagrid('getSelected');
+       if(row==null){
+           alert("请选择一条数据");
+           return;
+       }
+       $.ajax({
+           type: 'PATCH',
+           url: "http://localhost:1111/epm/cm/quartz/pauseQuartzByJobAndTrigger",
+           dataType: 'json',
+           contentType: "application/json; charset=utf-8",
+           data: JSON.stringify(row),
+           success: function (data) {
+               if (data.meta.code == 1) {
+                   alert(data.meta.message);
+                   $('#dg').datagrid({loadFilter: pagerFilter}).datagrid('loadData', getData());
+               } else {
+                   alert(data.meta.message);
+               }
+           }
+       });
+   }
+    /**
+     * 恢复定时任务
+     */
+   function resume() {
+       var row = $('#dg').datagrid('getSelected');
+       if(row==null){
+           alert("请选择一条数据");
+           return;
+       }
+       $.ajax({
+           type: 'PATCH',
+           url: "http://localhost:1111/epm/cm/quartz/resumeQuartzByJobAndTrigger",
+           dataType: 'json',
+           contentType: "application/json; charset=utf-8",
+           data: JSON.stringify(row),
+           success: function (data) {
+               if (data.meta.code == 1) {
+                   alert(data.meta.message);
+                   $('#dg').datagrid({loadFilter: pagerFilter}).datagrid('loadData', getData());
+               } else {
+                   alert(data.meta.message);
+               }
+           }
+       });
+   }
+    /**
+     * json转对象
+     * @param form
+     * @returns {{}}
+     */
+    function serializeObject(form) {
+        var o = {};
+        $.each(form.serializeArray(), function (index) {
+            if (o[this['name']]) {
+                o[this['name']] = o[this['name']] + "," + this['value'];
+            } else {
+                o[this['name']] = this['value'];
+            }
+        });
+        return o;
+    }
+
+    function pagerFilter(data) {
+        if (typeof data.length == 'number' && typeof data.splice == 'function') {	// is array
+            data = {
+                total: data.length,
+                rows: data
+            }
+        }
+        var dg = $(this);
+        var opts = dg.datagrid('options');
+        var pager = dg.datagrid('getPager');
+        pager.pagination({
+            onSelectPage: function (pageNum, pageSize) {
+                opts.pageNumber = pageNum;
+                opts.pageSize = pageSize;
+                pager.pagination('refresh', {
+                    pageNumber: pageNum,
+                    pageSize: pageSize
+                });
+                dg.datagrid('loadData', data);
+            }
+        });
+        if (!data.originalRows) {
+            data.originalRows = (data.rows);
+        }
+        var start = (opts.pageNumber - 1) * parseInt(opts.pageSize);
+        var end = start + parseInt(opts.pageSize);
+        data.rows = (data.originalRows.slice(start, end));
+        return data;
+    }
+
+    $(function () {
+        $('#dg').datagrid({loadFilter: pagerFilter}).datagrid('loadData', getData());
+    });
+</script>
+</body>
+</html>

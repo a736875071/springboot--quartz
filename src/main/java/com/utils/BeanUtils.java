@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author YuanSongMing
+ * @author YangQing
  * @version 0.0.1
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {

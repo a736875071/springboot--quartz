@@ -5,7 +5,7 @@ import org.springframework.validation.ObjectError;
 import java.util.List;
 
 /**
- * @author YuanSongMing
+ * @author YangQing
  * @version 1.0.0
  */
 public class ValidateUtils {

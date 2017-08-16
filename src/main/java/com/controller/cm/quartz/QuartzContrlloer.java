@@ -2,6 +2,8 @@ package com.controller.cm.quartz;
 
 import com.dao.cm.quartz.AutoDeductionExtDao;
 import com.domain.cm.quartz.QuartzTimedTaskDto;
+import com.entity.cm.quartz.JobAndTrigger;
+import com.service.cm.quartz.QuartzService;
 import com.service.cm.quartz.ScheduledJob;
 import com.service.cm.quartz.config.MyJob;
 import com.service.cm.quartz.config.QuartzDefaultName;
@@ -40,6 +42,8 @@ public class QuartzContrlloer {
     private static final Logger logger = LoggerFactory.getLogger(QuartzContrlloer.class);
     @Autowired
     private AutoDeductionExtDao autoDeductionExtDao;
+    @Autowired
+    private QuartzService quartzService;
 
     public StdSchedulerFactory myStdSchedulerFactory() {
         //这是基于上线项目剥离出，项目中url，username，password可能会生产根据环境更改，所以使用加载properties形式
@@ -193,13 +197,119 @@ public class QuartzContrlloer {
     /**
      * 获取所有定时任务
      *
-     * @param orgId
      * @return
      * @throws ParseException
      */
     @RequestMapping(value = "/epm/cm/quartz/gets", method = RequestMethod.GET)
-    public Response<?> quartzTimedTaskService(Long orgId) throws ParseException {
+    public Response<?> quartzTimedTaskService() throws ParseException {
         List<QuartzTimedTaskDto> getQuartzTimedTasks = autoDeductionExtDao.selectAutoDeductionDto();
         return new Response<>().success(getQuartzTimedTasks);
+    }
+
+    //===================================结合页面=======================================================
+    /**
+     * 查询任务详情
+     *
+     * @return
+     */
+    @RequestMapping(value = "/epm/cm/quartz/getqueryjob", method = RequestMethod.GET)
+    public Response<?> quartzTimedTaskService1() {
+        List<JobAndTrigger> jobAndTriggers = quartzService.getJobAndTriggerDetails();
+        return new Response<>().success(jobAndTriggers);
+    }
+
+    /**
+     * 添加一条定时任务
+     * （数据库存储）
+     *
+     * @param jobAndTrigger
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/epm/cm/quartz/postQuartzByJobAndTrigger", method = RequestMethod.POST)
+    public Response<?> postQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) throws ParseException {
+
+        try {
+            // 1、创建一个JobDetail实例，指定Quartz
+            JobDetail jobDetail = JobBuilder.newJob(ScheduledJob.class)
+                    // 任务执行类
+                    .withIdentity(jobAndTrigger.getJob_NAME(), jobAndTrigger.getJob_GROUP())
+                    // 任务名，任务组
+                    .build();
+            String cron = jobAndTrigger.getCron_EXPRESSION();
+            Trigger trigger = TriggerBuilder.newTrigger()
+                    .withIdentity(jobAndTrigger.getTrigger_NAME(), jobAndTrigger.getTrigger_GROUP()).startNow()
+                    .withSchedule(CronScheduleBuilder.cronSchedule(cron)
+                    ).build();
+            // 3、创建Scheduler\
+            Scheduler scheduler = myStdSchedulerFactory().getScheduler();
+            scheduler.start();
+            // 4、调度执行
+            scheduler.scheduleJob(jobDetail, trigger);
+            return new Response<>().success("成功");
+        } catch (Exception e) {
+            return new Response<>().failure(e.getMessage());
+        }
+    }
+
+    /**
+     * 删除一条定时任务
+     * （数据库存储）
+     *
+     * @param jobAndTrigger
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/epm/cm/quartz/deleQuartzByJobAndTrigger", method = RequestMethod.DELETE)
+    public Response<?> deleQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) throws ParseException {
+
+        try {
+            Scheduler scheduler = myStdSchedulerFactory().getScheduler();
+            JobKey jobKey = new JobKey(jobAndTrigger.getJob_NAME(),jobAndTrigger.getJob_GROUP());
+            TriggerKey triggerKey = TriggerKey.triggerKey(jobAndTrigger.getTrigger_NAME(), jobAndTrigger.getTrigger_GROUP());
+            scheduler.pauseTrigger(triggerKey);// 停止触发器
+            scheduler.unscheduleJob(triggerKey);// 移除触发器
+            scheduler.deleteJob(jobKey);// 删除任务
+            scheduler.pauseJob(jobKey);
+            return new Response<>().success("成功");
+        } catch (Exception e) {
+            return new Response<>().failure(e.getMessage());
+        }
+    }
+    /**
+     * 暂停一条定时任务
+     * （数据库存储）
+     *
+     * @param jobAndTrigger
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/epm/cm/quartz/pauseQuartzByJobAndTrigger", method = RequestMethod.PATCH)
+    public Response<?> pauseQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) throws ParseException {
+
+        try {
+            Scheduler scheduler = myStdSchedulerFactory().getScheduler();
+            JobKey jobKey = new JobKey(jobAndTrigger.getJob_NAME(),jobAndTrigger.getJob_GROUP());
+            scheduler.pauseJob(jobKey);
+            return new Response<>().success("成功");
+        } catch (Exception e) {
+            return new Response<>().failure(e.getMessage());
+        }
+    }
+    /**
+     * 恢复一条定时任务
+     * （数据库存储）
+     *
+     * @param jobAndTrigger
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/epm/cm/quartz/resumeQuartzByJobAndTrigger", method = RequestMethod.PATCH)
+    public Response<?> resumeQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) throws ParseException {
+
+        try {
+            Scheduler scheduler = myStdSchedulerFactory().getScheduler();
+            JobKey jobKey = new JobKey(jobAndTrigger.getJob_NAME(),jobAndTrigger.getJob_GROUP());
+            scheduler.resumeJob(jobKey);
+            return new Response<>().success("成功");
+        } catch (Exception e) {
+            return new Response<>().failure(e.getMessage());
+        }
     }
 }
