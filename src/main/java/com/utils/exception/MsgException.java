@@ -3,8 +3,8 @@ package com.utils.exception;
 /**
  * 自定义消息异常
  *
- * @author hetao
- * @date 2016-10-12
+ * @author YangQing
+ *  @version 1.0.0
  */
 public class MsgException extends RuntimeException {
 

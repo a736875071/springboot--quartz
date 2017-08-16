@@ -4,16 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * @author YuanSongMing
+ * @author YangQing
  * @version 1.0.0
  */
 public class EpmLogMessage {
     // 什么系统、什么功能模块、具体的类和方法、谁在操作、时间、做了什么操作
-    // which
     private String service; // 什么系统
     private String module;  // 什么功能模块
     private String method;  // 具体的类和方法
-    // what
     private String operation;    // 做了什么操作
 
     public EpmLogMessage() {

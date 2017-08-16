@@ -87,13 +87,13 @@ public class QuartzContrlloer {
                 e.printStackTrace();
             }
             logger.info(new LogMessage<>(UUID.randomUUID().toString(),
-                    new EpmLogMessage("epm-cm-service",
+                    new EpmLogMessage("service",
                             "quartz",
                             "postQuartzTimedTasks",
                             "添加一条定时任务记录,记录信息:" + quartzTimedTaskDto)).toString());
             return new Response<>().success("");
         } catch (MsgException e) {
-            logger.error(new EpmLogMessage("epm-cm-service",
+            logger.error(new EpmLogMessage("service",
                     "quartz",
                     "postQuartzTimedTasks",
                     "添加一条定时任务记录:" + quartzTimedTaskDto + ",操作失败,原因:" + e.getMessage()).toString(), e);

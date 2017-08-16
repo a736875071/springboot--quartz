@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 /**
- * ExceptionAdvice
  *
- * @author Dengzw
- * @date 16/9/27
+ *
+ * @author YangQing
+ * @version 1.0.0
  */
 @ControllerAdvice
 @ResponseBody

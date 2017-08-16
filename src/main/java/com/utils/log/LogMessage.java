@@ -6,12 +6,10 @@ import com.google.gson.GsonBuilder;
 /**
  * 日志基础类
  *
- * @author Dengzw
- * @author YuanSongMing
+ * @author YangQing
  * @version 1.0.0
  */
 public class LogMessage<T> {
-    // 什么人     什么时候   什么方式  做什么事（A-B-C-D..）与其他业务的关联记录 以Json的格式去记录   什么时间  在什么功能模块
     private String operator;    // 操作人
     private T record; // 操作记录
 
