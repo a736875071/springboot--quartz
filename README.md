@@ -3,4 +3,4 @@
 com.service.cm.quartz.config.SchedulerListener中手动添加properties文件，
 如果不需要更改properties中内容可以在resource下创建properties文件
 
-![image]https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/add.png
+![image](https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/add.png)
