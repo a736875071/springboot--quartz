@@ -17,7 +17,7 @@ http://localhost:63342/springboot-quartz/static/quartzIndex.html
 
 2.启动项目通过
 
-localhost:1111/quartzIndex.html
+http://localhost:1111/quartzIndex.html
 
 ![image](https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/list.png)
 ![image](https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/add.png)
