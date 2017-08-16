@@ -11,11 +11,11 @@ com.service.cm.quartz.config.SchedulerListener中手动添加properties文件，
 
 访问路径：
 
-1.可以直接访问页面
+1.可以直接访问页面（页面修改不用重启服务，实现前后端分离）
 
 http://localhost:63342/springboot-quartz/static/quartzIndex.html
 
-2.启动项目通过
+2.启动项目访问页面（修改页面需要重启服务，编译后生效，相当于集成开发）
 
 http://localhost:1111/quartzIndex.html
 
