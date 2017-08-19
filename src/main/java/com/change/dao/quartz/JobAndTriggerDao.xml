@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
-<mapper namespace="com.dao.quartz.JobAndTriggerDao">
+<mapper namespace="com.change.dao.quartz.JobAndTriggerDao">
     
-    <select id="getJobAndTriggerDetails" resultType="com.entity.quartz.JobAndTrigger">
+    <select id="getJobAndTriggerDetails" resultType="com.change.entity.quartz.JobAndTrigger">
 			SELECT
 				qrtz_job_details.JOB_NAME,
 				qrtz_job_details.JOB_GROUP,

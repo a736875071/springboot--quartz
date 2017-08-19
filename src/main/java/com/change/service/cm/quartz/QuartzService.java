@@ -1,6 +1,6 @@
-package com.service.cm.quartz;
+package com.change.service.cm.quartz;
 
-import com.entity.quartz.JobAndTrigger;
+import com.change.entity.quartz.JobAndTrigger;
 
 import java.text.ParseException;
 import java.util.List;

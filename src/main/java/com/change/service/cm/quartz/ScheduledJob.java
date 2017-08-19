@@ -1,4 +1,4 @@
-package com.service.cm.quartz;
+package com.change.service.cm.quartz;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

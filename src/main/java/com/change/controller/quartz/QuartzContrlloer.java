@@ -1,8 +1,8 @@
-package com.controller.quartz;
+package com.change.controller.quartz;
 
-import com.entity.quartz.JobAndTrigger;
-import com.service.cm.quartz.QuartzService;
-import com.utils.Response.Response;
+import com.change.entity.quartz.JobAndTrigger;
+import com.change.service.cm.quartz.QuartzService;
+import com.change.utils.Response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.service.cm.quartz.config;
+package com.change.service.cm.quartz.config;
 
 import java.io.IOException;
 import java.util.Properties;

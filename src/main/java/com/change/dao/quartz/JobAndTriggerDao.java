@@ -1,7 +1,7 @@
-package com.dao.quartz;
+package com.change.dao.quartz;
 
 
-import com.entity.quartz.JobAndTrigger;
+import com.change.entity.quartz.JobAndTrigger;
 
 import java.util.List;
 

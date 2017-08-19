@@ -1,4 +1,4 @@
-package com;
+package com.change;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @version 1.0.0
  **/
 @SpringBootApplication
-@MapperScan("com.dao")
+@MapperScan("com.change.dao")
 @EnableTransactionManagement
-@ComponentScan("com")
+//@ComponentScan("com")
 public class Application {
 
     public static void main(String[] args) {

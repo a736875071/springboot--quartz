@@ -1,7 +1,7 @@
-package com.service.cm.quartz;
+package com.change.service.cm.quartz;
 
-import com.dao.quartz.JobAndTriggerDao;
-import com.entity.quartz.JobAndTrigger;
+import com.change.dao.quartz.JobAndTriggerDao;
+import com.change.entity.quartz.JobAndTrigger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.entity.quartz;
+package com.change.entity.quartz;
 
 import java.math.BigInteger;
 
