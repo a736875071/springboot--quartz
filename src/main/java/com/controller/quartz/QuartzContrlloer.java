@@ -1,6 +1,6 @@
-package com.controller.cm.quartz;
+package com.controller.quartz;
 
-import com.entity.cm.quartz.JobAndTrigger;
+import com.entity.quartz.JobAndTrigger;
 import com.service.cm.quartz.QuartzService;
 import com.utils.Response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
