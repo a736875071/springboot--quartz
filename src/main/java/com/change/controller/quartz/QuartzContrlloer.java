@@ -44,8 +44,12 @@ public class QuartzContrlloer {
      */
     @RequestMapping(value = "/epm/cm/quartz/postQuartzByJobAndTrigger", method = RequestMethod.POST)
     public Response<?> postQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) {
-        quartzService.postQuartzByJobAndTrigger(jobAndTrigger);
-        return new Response<>().success("成功");
+        try {
+            quartzService.postQuartzByJobAndTrigger(jobAndTrigger);
+            return new Response<>().success("成功");
+        } catch (Exception e) {
+            return new Response<>().failure(e.getMessage());
+        }
     }
 
     /**
@@ -89,4 +93,5 @@ public class QuartzContrlloer {
         quartzService.resumeQuartzByJobAndTrigger(jobAndTrigger);
         return new Response<>().success("成功");
     }
+
 }

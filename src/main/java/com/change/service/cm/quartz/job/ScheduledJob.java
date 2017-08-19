@@ -1,4 +1,4 @@
-package com.change.service.cm.quartz;
+package com.change.service.cm.quartz.job;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -17,7 +17,7 @@ import java.util.Date;
  * @version 1.0.0
  */
 
-public class ScheduledJob implements Job {
+public class ScheduledJob implements BaseJob {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -28,8 +28,7 @@ public class ScheduledJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         JobKey jobKey = context.getJobDetail().getKey();
-        //批量扣费
-        System.out.println("定时任务:" + jobKey.getName() + "调用批量扣费" + dateFormat().format(new Date()));
+        System.out.println("定时任务:" + jobKey.getName()+ ","+context.getJobDetail().getJobClass().getName()+ "执行时间: " + dateFormat().format(new Date()));
         //日志输出级别info
         logger.debug("定时任务:" + jobKey.getName() + "调用批量扣费" + dateFormat().format(new Date()));
     }

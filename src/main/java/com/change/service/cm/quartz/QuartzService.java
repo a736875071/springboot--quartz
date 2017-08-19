@@ -26,7 +26,7 @@ public interface QuartzService {
      * @param jobAndTrigger
      * @throws ParseException
      */
-    void postQuartzByJobAndTrigger(JobAndTrigger jobAndTrigger);
+    void postQuartzByJobAndTrigger(JobAndTrigger jobAndTrigger) throws Exception;
 
     /**
      * 删除一条定时任务
