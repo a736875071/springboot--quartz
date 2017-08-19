@@ -29,3 +29,6 @@ http://localhost:1111/quartzIndex.html
 20170820：
 
 1.将之前的一个定时任务执行类改为两个（ScheduledJob和HelloJob），可以根据任务类名进行选择执行那个任务类
+
+![image](https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/list2.png)
+![image](https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/add2.png)
