@@ -1,7 +1,7 @@
 package com.change.controller.quartz;
 
 import com.change.entity.quartz.JobAndTrigger;
-import com.change.service.cm.quartz.QuartzService;
+import com.change.service.quartz.QuartzService;
 import com.change.utils.Response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +29,7 @@ public class QuartzContrlloer {
      *
      * @return
      */
-    @RequestMapping(value = "/epm/cm/quartz/getqueryjob", method = RequestMethod.GET)
+    @RequestMapping(value = "/change/quartz/getqueryjob", method = RequestMethod.GET)
     public Response<?> quartzTimedTaskService1() {
         List<JobAndTrigger> jobAndTriggers = quartzService.getJobAndTriggerDetails();
         return new Response<>().success(jobAndTriggers);
@@ -42,7 +42,7 @@ public class QuartzContrlloer {
      * @param jobAndTrigger
      * @throws ParseException
      */
-    @RequestMapping(value = "/epm/cm/quartz/postQuartzByJobAndTrigger", method = RequestMethod.POST)
+    @RequestMapping(value = "/change/quartz/postQuartzByJobAndTrigger", method = RequestMethod.POST)
     public Response<?> postQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) {
         try {
             quartzService.postQuartzByJobAndTrigger(jobAndTrigger);
@@ -59,7 +59,7 @@ public class QuartzContrlloer {
      * @param jobAndTrigger
      * @throws ParseException
      */
-    @RequestMapping(value = "/epm/cm/quartz/deleQuartzByJobAndTrigger", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/change/quartz/deleQuartzByJobAndTrigger", method = RequestMethod.DELETE)
     public Response<?> deleQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) throws ParseException {
 
         quartzService.deleQuartzByJobAndTrigger(jobAndTrigger);
@@ -73,7 +73,7 @@ public class QuartzContrlloer {
      * @param jobAndTrigger
      * @throws ParseException
      */
-    @RequestMapping(value = "/epm/cm/quartz/pauseQuartzByJobAndTrigger", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/change/quartz/pauseQuartzByJobAndTrigger", method = RequestMethod.PATCH)
     public Response<?> pauseQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) throws ParseException {
 
         quartzService.pauseQuartzByJobAndTrigger(jobAndTrigger);
@@ -87,7 +87,7 @@ public class QuartzContrlloer {
      * @param jobAndTrigger
      * @throws ParseException
      */
-    @RequestMapping(value = "/epm/cm/quartz/resumeQuartzByJobAndTrigger", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/change/quartz/resumeQuartzByJobAndTrigger", method = RequestMethod.PATCH)
     public Response<?> resumeQuartzByJobAndTrigger(@RequestBody JobAndTrigger jobAndTrigger) throws ParseException {
 
         quartzService.resumeQuartzByJobAndTrigger(jobAndTrigger);

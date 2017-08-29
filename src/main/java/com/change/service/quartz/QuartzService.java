@@ -1,4 +1,4 @@
-package com.change.service.cm.quartz;
+package com.change.service.quartz;
 
 import com.change.entity.quartz.JobAndTrigger;
 

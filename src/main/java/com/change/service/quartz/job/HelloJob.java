@@ -1,4 +1,4 @@
-package com.change.service.cm.quartz.job;
+package com.change.service.quartz.job;
 
 /**
  * @author YangQing

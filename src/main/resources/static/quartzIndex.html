@@ -110,7 +110,7 @@
         var rows = [];
         $.ajax({
             type: 'GET',
-            url: "http://localhost:1111/epm/cm/quartz/getqueryjob",
+            url: "http://localhost:1111/change/quartz/getqueryjob",
             dataType: 'json',
             success: function (data) {
                 console.log(data.meta.code);
@@ -127,7 +127,7 @@
         var formData1 = serializeObject($('#ff'));
         $.ajax({
             type: 'POST',
-            url: "http://localhost:1111/epm/cm/quartz/postQuartzByJobAndTrigger",
+            url: "http://localhost:1111/change/quartz/postQuartzByJobAndTrigger",
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(formData1),
@@ -154,7 +154,7 @@
         }
         $.ajax({
             type: 'DELETE',
-            url: "http://localhost:1111/epm/cm/quartz/deleQuartzByJobAndTrigger",
+            url: "http://localhost:1111/change/quartz/deleQuartzByJobAndTrigger",
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(row),
@@ -179,7 +179,7 @@
         }
         $.ajax({
             type: 'PATCH',
-            url: "http://localhost:1111/epm/cm/quartz/pauseQuartzByJobAndTrigger",
+            url: "http://localhost:1111/change/quartz/pauseQuartzByJobAndTrigger",
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(row),
@@ -204,7 +204,7 @@
         }
         $.ajax({
             type: 'PATCH',
-            url: "http://localhost:1111/epm/cm/quartz/resumeQuartzByJobAndTrigger",
+            url: "http://localhost:1111/change/quartz/resumeQuartzByJobAndTrigger",
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(row),

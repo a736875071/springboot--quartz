@@ -1,6 +1,5 @@
-package com.change.service.cm.quartz.job;
+package com.change.service.quartz.job;
 
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
