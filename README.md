@@ -32,3 +32,26 @@ http://localhost:1111/quartzIndex.html
 
 ![image](https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/list2.png)
 ![image](https://github.com/a736875071/springboot-quartz/blob/master/src/main/resources/static/add2.png)
+
+20170903：
+
+Spring Boot的默认配置方式，提供的静态资源映射如下:
+
+classpath:/META-INF/resources
+classpath:/resources
+classpath:/static
+classpath:/public
+
+优先级顺序为：META-INF/resources > resources > static > public
+
+默认值为
+
+spring.mvc.static-path-pattern=
+
+默认值为 classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+spring.resources.static-locations=这里设置要指向的路径，多个使用英文逗号隔开
+
+我们可以通过修改spring.mvc.static-path-pattern来修改默认的映射，例如我改成/xxx/**,
+
+那运行的时候访问 http://lcoalhost:8080/xxx/index.html 才对应到index.html页面。
