@@ -57,3 +57,11 @@ spring.resources.static-locations=这里设置要指向的路径，多个使用�
 我们可以通过修改spring.mvc.static-path-pattern来修改默认的映射，例如我改成/xxx/**,
 
 那运行的时候访问 http://lcoalhost:8080/xxx/index.html 才对应到index.html页面。
+
+20170904：
+
+1.将原来数据源由quartz.properties配置改成spring托管
+好处：在修改数据源时不用再修改quartz.properties文件，
+    在数据库集群环境下，本人测试quartz.properties文件中url配置集群链接，quartz不能连接上集群数据库，会默认改为RAM存储
+
+2.修改由于包结构变更造成任务创建，执行不了bug
