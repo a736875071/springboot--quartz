@@ -1,6 +1,8 @@
 # springboot-quartz
 这个项目基于springboot-mybatis生成，将其中的quartz插件单独提出来生成
 
+注：启动项目前请将resources/sql/quartz.sql导入数据库
+
 20170816：
 
 1.添加springboot 跨域配置
