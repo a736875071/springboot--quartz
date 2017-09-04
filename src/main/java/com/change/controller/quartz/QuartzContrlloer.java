@@ -48,7 +48,7 @@ public class QuartzContrlloer {
             quartzService.postQuartzByJobAndTrigger(jobAndTrigger);
             return new Response<>().success("成功");
         } catch (Exception e) {
-            return new Response<>().failure(e.getMessage());
+            return new Response<>().failure(e.toString());
         }
     }
 
