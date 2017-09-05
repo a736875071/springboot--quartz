@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @MapperScan("com.change.dao")
 @EnableTransactionManagement
-//@ComponentScan("com")
 public class Application {
 
     public static void main(String[] args) {
